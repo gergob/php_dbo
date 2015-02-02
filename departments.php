@@ -3,7 +3,7 @@
 require_once('employee_repository.php');
 
 $repo = new EmployeesRepository("localhost", "employees", "emp_user", "emp_user1234");
-$result = $repo->getAllEmployees();
+$result = $repo->getAllDepartments();
 
 ?>
 
@@ -42,12 +42,12 @@ $result = $repo->getAllEmployees();
     </nav>
 
   	<div class="container" style="margin-top:2.5em;">
-    <h1>Employees</h1>
+    <h1>Departments</h1>
 
     <?
 
     foreach ($result as $item) {
-		echo "<p>".$item->getFirstName()." ".$item->getLastName()."</p>";
+		echo "<h3>".$item->getDeptNo()." - ".$item->getDeptName()."</h3>";
 	}
 
     ?>
