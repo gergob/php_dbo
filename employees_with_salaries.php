@@ -4,7 +4,6 @@ require_once('employee_repository.php');
 
 $repo = new EmployeesRepository("localhost", "employees", "emp_user", "emp_user1234");
 
-
 ?>
 
 <!DOCTYPE html>
@@ -42,22 +41,27 @@ $repo = new EmployeesRepository("localhost", "employees", "emp_user", "emp_user1
     </nav>
 
   	<div class="container" style="margin-top:2.5em;">
-    <h1>Departments</h1>
+    <h1>Employees</h1>
 
-    <?
+<?php
+
+    $min = 150000; //this can come from input or session
+    $max = 155000;
+
     try{
-      $result = $repo->getAllDepartments();
+      $result = $repo->getEmployeesWithSalariesBetween($min, $max);
     }
     catch(PDOException $pdoEx){
       echo $repo->formatErrorMessage($pdoEx->getMessage());
       die();
     }
+    echo "<h2>Employees with salary between:$".$min." and $".$max.":</h2>" ;
 
-    foreach ($result as $item) {
-		  echo "<h3>".$item->getDeptNo()." - ".$item->getDeptName()."</h3>";
-  	}
+    while ($item = $result->fetch()) {
+      echo "<p>[$".$item['salary']."] ".$item['first_name']." ".$item['last_name']."</p>";
+    }
 
-    ?>
+?>
 
 
 

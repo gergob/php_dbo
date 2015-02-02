@@ -3,7 +3,6 @@
 require_once('employee_repository.php');
 
 $repo = new EmployeesRepository("localhost", "employees", "emp_user", "emp_user1234");
-$result = $repo->getAllEmployees();
 
 ?>
 
@@ -46,9 +45,17 @@ $result = $repo->getAllEmployees();
 
     <?
 
+    try{
+      $result = $repo->getAllEmployees();
+    }
+    catch(PDOException $pdoEx){
+      echo $repo->formatErrorMessage($pdoEx->getMessage());
+      die();
+    }
+
     foreach ($result as $item) {
-		echo "<p>".$item->getFirstName()." ".$item->getLastName()."</p>";
-	}
+		  echo "<p>".$item->getFirstName()." ".$item->getLastName()."</p>";
+	  }
 
     ?>
 
